@@ -14,6 +14,7 @@ export class ProductListComponent implements OnInit {
   products!: Product[];
   filteredProducts!: Product[];
   filterForm!: FormGroup;
+  filterApplied: boolean = false;
 
   constructor(private productService: ProductService, private router: Router, private fb: FormBuilder) {
     this.filterForm = this.fb.group({
@@ -55,10 +56,12 @@ export class ProductListComponent implements OnInit {
     var search = this.filterForm.get('search')?.value;
     if (search) {
       this.filteredProducts = this.products.filter(p => p.name.includes(search));
+      this.filterApplied = true;
     }
   }
 
   clearFilters(): void {
+    this.filterApplied = false;
     this.filterForm.reset();
     this.filteredProducts = this.products;
   }
